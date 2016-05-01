@@ -1,16 +1,24 @@
-<ion-navbar *navbar>
-  <ion-title>
-    Home
-  </ion-title>
-</ion-navbar>
+<ion-content padding="true" class="home">
+      <h1 id="title">NowTy</h1>
+      <div class="spacer" style="width: 100%; height: 64px;"></div>
+      <h3 id="subtt">Choose a location</h3>
 
-<ion-content class="home">
-  <ion-card>
-    <ion-card-header>
-      Card Header
-    </ion-card-header>
-    <ion-card-content>
-      Hello World
-    </ion-card-content>
-  </ion-card>
+      <ion-searchbar
+        [(ngModel)]="searchQuery"
+        placeholder="Enter an address"
+        (input)="searchBarInput($event)">
+      </ion-searchbar>
+
+      <button block>
+        Search
+      </button>
+
+      <ion-item>
+        OR
+      </ion-item>
+
+      <button block dark (click)="goToMap()">
+        <ion-icon name="locate"></ion-icon>
+        {{buttonLabel}}
+      </button>
 </ion-content>
