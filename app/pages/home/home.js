@@ -1,32 +1,46 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, Alert} from 'ionic-angular';
 import {MapPage} from '../map/map';
-
-const currentLabel = "Use current position"
-const addressLabel = "Use this address"
 
 @Page({
   templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
   static get parameters() {
-    return [[NavController]]
+    return [[NavController]];
   }
 
   constructor(nav) {
     this.nav = nav;
+    this.searchQuery = '';
+    this.buttonLabel = "Use current position";
 
-    this.searchQuery = ''
-    this.buttonLabel = currentLabel
+    this.initSearchPlaces();
   }
 
-  searchBarInput(e) {
-//    if (this.searchQuery == '')
-//      this.buttonLabel = currentLabel
-//    else
-//      this.buttonLabel = addressLabel
+  initSearchPlaces() {
+
   }
 
-  goToMap() {
-    this.nav.push(MapPage, {HomePage: this})
+  goToMap(address) {
+    if (address) {
+      let nav = this.nav;
+      let geocoder = new google.maps.Geocoder();
+      let coords = geocoder.geocode({'address': this.searchQuery}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          nav.push(MapPage, {position: results[0].geometry.location});
+        }
+        else {
+          let alert = Alert.create({
+            title: "Address not found",
+            subTitle: status,
+            buttons: ['OK']
+          });
+          nav.present(alert);
+        }
+      });
+    }
+    else {
+      this.nav.push(MapPage, {position: null});
+    }
   }
 }

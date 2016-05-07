@@ -1,24 +1,28 @@
 <ion-content padding="true" class="home">
-      <h1 id="title">NowTy</h1>
+      <h1 id="title">Skollin'</h1>
       <div class="spacer" style="width: 100%; height: 64px;"></div>
       <h3 id="subtt">Choose a location</h3>
 
       <ion-searchbar
         [(ngModel)]="searchQuery"
-        placeholder="Enter an address"
-        (input)="searchBarInput($event)">
+        placeholder="Enter an address">
+  <!--      (input)="searchBarInput($event)"> -->
       </ion-searchbar>
 
-      <button block>
-        Search
-      </button>
+      <div class="wrap">
+        <button block (click)="goToMap(true)">
+          Search
+        </button>
+      </div>
 
       <ion-item>
         OR
       </ion-item>
 
-      <button block dark (click)="goToMap()">
-        <ion-icon name="locate"></ion-icon>
-        {{buttonLabel}}
-      </button>
+      <div class="wrap">
+        <button block dark (click)="goToMap(false)">
+          <ion-icon name="pin"></ion-icon>
+          {{buttonLabel}}
+        </button>
+      </div>
 </ion-content>
