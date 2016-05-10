@@ -4,15 +4,22 @@ import {Injectable} from 'angular2/core';
 export class GlobalVars {
 
   constructor() {
-    this.lastPos = null;
+    this.coords = null;
+    this.address = null;
   }
 
-  setLastPos(value) {
-    this.lastPos = value;
+  setCoords(value) {
+    this.coords = value;
+  }
+  getCoords() {
+    return this.coords;
   }
 
-  getLastPos() {
-    return this.lastPos;
+  setAddress(value) {
+    this.address = value;
+  }
+  getAddress() {
+    return this.address;
   }
 
 }

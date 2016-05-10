@@ -1,22 +1,21 @@
-import {Page, Geolocation, NavParams, NavController, Alert} from 'ionic-angular';
+import {Page, Geolocation, NavController, Alert} from 'ionic-angular';
 import {GlobalVars} from '../../global-vars'
 
 const defaultZoom = 15;
 const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 
 @Page({
-  templateUrl: 'build/pages/map/map.html'
+  templateUrl: 'build/pages/map-tab/map-tab.html'
 })
 
-export class MapPage {
+export class MapTabPage {
   static get parameters() {
-    return [[NavController], [NavParams], [GlobalVars]];
+    return [[NavController], [GlobalVars]];
   }
-  constructor(nav, navParams, glob) {
+  constructor(nav, glob) {
     this.nav = nav;
     this.glob = glob;
     this.centerMarker = null;
-    this.address = navParams.get('address');
   }
 
   onPageLoaded() {
@@ -24,7 +23,7 @@ export class MapPage {
 
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       window.dispatchEvent(new Event('resize'))
-      if (this.address === null) {
+      if (this.glob.getAddress() === null) {
         this.setCurrentPos();
       }
       else {
@@ -34,7 +33,7 @@ export class MapPage {
   }
 
   initMap() {
-    let startPos = (this.glob.getLastPos() !== null) ? this.glob.getLastPos() : defaultPos;
+    let startPos = (this.glob.getCoords() !== null) ? this.glob.getCoords() : defaultPos;
     let mapOptions = {
         center: startPos,
         zoom: defaultZoom,
@@ -52,7 +51,8 @@ export class MapPage {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.glob.setLastPos(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        this.glob.setCoords(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        this.glob.setAddress('My position');
         this.updateCenter();
       },
       (error) => {
@@ -63,13 +63,14 @@ export class MapPage {
 
   setAddress() {
     let geocoder = new google.maps.Geocoder();
-    let coords = geocoder.geocode({'address': this.address},
+    let coords = geocoder.geocode({'address': this.glob.getAddress()},
       (results, status) => {
         if (status == google.maps.GeocoderStatus.OK) {
-          this.glob.setLastPos(results[0].geometry.location);
+          this.glob.setCoords(results[0].geometry.location);
           this.updateCenter();
         }
         else {
+          this.glob.setAddress('Unknown address');
           let alert = Alert.create({
             title: "Address not found",
             subTitle: status,
@@ -81,7 +82,7 @@ export class MapPage {
   }
 
   updateCenter() {
-    this.map.panTo(this.glob.getLastPos());
+    this.map.panTo(this.glob.getCoords());
     this.map.setZoom(defaultZoom);
 
     if (this.centerMarker !== null) {

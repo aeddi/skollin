@@ -1,5 +1,5 @@
 import {Page, NavController, Alert} from 'ionic-angular';
-import {MapPage} from '../map/map';
+import {TabsPage} from '../tabs/tabs';
 import {UserPage} from '../user/user';
 import {SelectedDealPage} from '../sel-deal/sel-deal';
 
@@ -15,7 +15,6 @@ export class HomePage {
     this.nav = nav;
     this.searchQuery = '';
 
-    this.count = 42;
     this.initSearchPlaces();
   }
 
@@ -24,8 +23,7 @@ export class HomePage {
   }
 
   goToMap(address) {
-    this.nav.push(MapPage, {address: address});
-    this.count++;
+    this.nav.push(TabsPage, {address: address});
   }
 
   goToUserProfile() {
