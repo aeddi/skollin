@@ -6,6 +6,7 @@ export class GlobalVars {
   constructor() {
     this.coords = null;
     this.address = null;
+    this.tabsNav = null;
   }
 
   setCoords(value) {
@@ -22,4 +23,10 @@ export class GlobalVars {
     return this.address;
   }
 
+  setTabsNav(value) {
+    this.tabsNav = value;
+  }
+  getTabsNav() {
+    return this.tabsNav;
+  }
 }

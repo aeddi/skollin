@@ -24,6 +24,7 @@ export class MapTabPage {
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       window.dispatchEvent(new Event('resize'))
       if (this.glob.getAddress() === null) {
+        this.glob.setAddress('My position');
         this.setCurrentPos();
       }
       else {
@@ -52,7 +53,6 @@ export class MapTabPage {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.glob.setCoords(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-        this.glob.setAddress('My position');
         this.updateCenter();
       },
       (error) => {
@@ -71,12 +71,12 @@ export class MapTabPage {
         }
         else {
           this.glob.setAddress('Unknown address');
-          let alert = Alert.create({
-            title: "Address not found",
-            subTitle: status,
-            buttons: ['OK']
-          });
-          this.nav.present(alert);
+//          let alert = Alert.create({
+//            title: "Address not found",
+//            subTitle: status,
+//            buttons: ['OK']
+//          });
+//          this.nav.present(alert);
         }
       });
   }
