@@ -23,8 +23,8 @@ export class MapTabPage {
 
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       window.dispatchEvent(new Event('resize'))
-      if (this.glob.getAddress() === null) {
-        this.glob.setAddress('My position');
+      if (this.glob.address === null) {
+        this.glob.address = 'My position';
         this.setCurrentPos();
       }
       else {
@@ -34,7 +34,7 @@ export class MapTabPage {
   }
 
   initMap() {
-    let startPos = (this.glob.getCoords() !== null) ? this.glob.getCoords() : defaultPos;
+    let startPos = (this.glob.coords !== null) ? this.glob.coords : defaultPos;
     let mapOptions = {
         center: startPos,
         zoom: defaultZoom,
@@ -52,7 +52,7 @@ export class MapTabPage {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.glob.setCoords(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        this.glob.coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.updateCenter();
       },
       (error) => {
@@ -63,14 +63,14 @@ export class MapTabPage {
 
   setAddress() {
     let geocoder = new google.maps.Geocoder();
-    let coords = geocoder.geocode({'address': this.glob.getAddress()},
+    let coords = geocoder.geocode({'address': this.glob.address},
       (results, status) => {
         if (status == google.maps.GeocoderStatus.OK) {
-          this.glob.setCoords(results[0].geometry.location);
+          this.glob.coords = results[0].geometry.location;
           this.updateCenter();
         }
         else {
-          this.glob.setAddress('Unknown address');
+          this.glob.address = 'Unknown address';
 //          let alert = Alert.create({
 //            title: "Address not found",
 //            subTitle: status,
@@ -82,7 +82,7 @@ export class MapTabPage {
   }
 
   updateCenter() {
-    this.map.panTo(this.glob.getCoords());
+    this.map.panTo(this.glob.coords);
     this.map.setZoom(defaultZoom);
 
     if (this.centerMarker !== null) {

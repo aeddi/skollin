@@ -1,13 +1,13 @@
 <ion-navbar *navbar>
-	<ion-title (clic)="test()">{{glob.getAddress()}}</ion-title>
-  <ion-buttons end>
-    <button (clic)="test()">
+  <ion-title (click)="goToSearch()">{{glob.address}}</ion-title>
+  <ion-buttons end (click)="goToSearch()">
+    <button>
       <ion-icon name="search"></ion-icon>
     </button>
   </ion-buttons>
 </ion-navbar>
 
-<ion-tabs tabbarLayout="icon-left">
+<ion-tabs tabbarPlacement="bottom" tabbarLayout="icon-left">
   <ion-tab [root]="map_tab" tabIcon="map" tabTitle="Map"></ion-tab>
   <ion-tab [root]="list_tab" tabIcon="list" tabTitle="List"></ion-tab>
 </ion-tabs>

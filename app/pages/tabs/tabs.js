@@ -1,6 +1,7 @@
-import {Page, NavParams} from 'ionic-angular';
+import {Page, NavController, NavParams} from 'ionic-angular';
 import {MapTabPage} from '../map-tab/map-tab';
 import {ListTabPage} from '../list-tab/list-tab';
+import {SearchPage} from '../search/search';
 import {GlobalVars} from '../../global-vars'
 
 @Page({
@@ -8,16 +9,17 @@ import {GlobalVars} from '../../global-vars'
 })
 export class TabsPage {
   static get parameters() {
-    return [[NavParams], [GlobalVars]];
+    return [[NavController], [NavParams], [GlobalVars]];
   }
-  constructor(navParams, glob) {
+  constructor(nav, navParams, glob) {
+    this.nav = nav;
     this.glob = glob;
     this.map_tab = MapTabPage;
     this.list_tab = ListTabPage;
-    this.glob.setAddress(navParams.get('address'));
+    this.glob.address = navParams.get('address');
   }
 
-  test() {
-    console.log('test');
+  goToSearch() {
+    this.nav.push(SearchPage);
   }
 }
