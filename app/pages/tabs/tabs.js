@@ -1,22 +1,25 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
-import {MapTabPage} from '../map-tab/map-tab';
+import {Page, NavController} from 'ionic-angular';
+import {GlobalVars} from '../../global-vars';
+import {MapTabNativePage} from '../map-tab-native/map-tab-native';
+import {MapTabJsPage} from '../map-tab-js/map-tab-js';
 import {ListTabPage} from '../list-tab/list-tab';
 import {SearchPage} from '../search/search';
-import {GlobalVars} from '../../global-vars'
 
 @Page({
   templateUrl: 'build/pages/tabs/tabs.html'
 })
 export class TabsPage {
   static get parameters() {
-    return [[NavController], [NavParams], [GlobalVars]];
+    return [[NavController], [GlobalVars]];
   }
-  constructor(nav, navParams, glob) {
+  constructor(nav, glob) {
     this.nav = nav;
     this.glob = glob;
-    this.map_tab = MapTabPage;
     this.list_tab = ListTabPage;
-    this.glob.address = navParams.get('address');
+		if (window.plugin === undefined)
+			this.map_tab = MapTabJsPage;
+		else
+			this.map_tab = MapTabNativePage;
   }
 
   goToSearch() {

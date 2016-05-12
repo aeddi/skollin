@@ -1,5 +1,5 @@
 import {Page} from 'ionic-angular';
-import {GlobalVars} from '../../global-vars'
+import {GlobalVars} from '../../global-vars';
 
 @Page({
   templateUrl: 'build/pages/search/search.html',

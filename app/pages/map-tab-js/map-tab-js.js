@@ -1,18 +1,18 @@
-import {Page, Geolocation, NavController, Alert} from 'ionic-angular';
-import {GlobalVars} from '../../global-vars'
+import {Page, Geolocation} from 'ionic-angular';
+import {GlobalVars} from '../../global-vars';
 
 const defaultZoom = 15;
 const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 
 @Page({
-  templateUrl: 'build/pages/map-tab/map-tab.html'
+  templateUrl: 'build/pages/map-tab-js/map-tab-js.html'
 })
 
-export class MapTabPage {
+export class MapTabJsPage {
   static get parameters() {
-    return [[NavController], [GlobalVars]];
+    return [[GlobalVars]];
   }
-  constructor(nav, glob) {
+  constructor(glob) {
     this.nav = nav;
     this.glob = glob;
     this.centerMarker = null;
@@ -71,12 +71,6 @@ export class MapTabPage {
         }
         else {
           this.glob.address = 'Unknown address';
-//          let alert = Alert.create({
-//            title: "Address not found",
-//            subTitle: status,
-//            buttons: ['OK']
-//          });
-//          this.nav.present(alert);
         }
       });
   }
