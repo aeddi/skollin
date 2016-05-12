@@ -13,7 +13,6 @@ export class MapTabJsPage {
     return [[GlobalVars]];
   }
   constructor(glob) {
-    this.nav = nav;
     this.glob = glob;
     this.centerMarker = null;
   }
