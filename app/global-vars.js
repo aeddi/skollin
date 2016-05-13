@@ -6,5 +6,6 @@ export class GlobalVars {
     this.coords = null;
     this.address = null;
     this.tabsNav = null;
+    this.lastLock = null;
   }
 }

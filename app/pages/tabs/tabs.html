@@ -1,13 +1,14 @@
-<ion-navbar *navbar>
-  <ion-title (click)="goToSearch()">{{glob.address}}</ion-title>
-  <ion-buttons end (click)="goToSearch()">
-    <button>
-      <ion-icon name="search"></ion-icon>
-    </button>
-  </ion-buttons>
+<ion-navbar class="tabs" *navbar skollin hideBackButton>
+  <button menuToggle (click)="mapLock()">
+    <ion-icon name='menu'></ion-icon>
+  </button>
+  <ion-title>
+    <img src="img/logo.png" height="45">
+    kollin'
+  </ion-title>
 </ion-navbar>
 
-<ion-tabs tabbarPlacement="bottom" tabbarLayout="icon-left">
+<ion-tabs tabbarPlacement="bottom" tabbarLayout="icon-left" skollin>
   <ion-tab [root]="map_tab" tabIcon="map" tabTitle="Map"></ion-tab>
   <ion-tab [root]="list_tab" tabIcon="list" tabTitle="List"></ion-tab>
 </ion-tabs>

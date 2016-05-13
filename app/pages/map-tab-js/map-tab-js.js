@@ -37,9 +37,9 @@ export class MapTabJsPage {
     let mapOptions = {
         center: startPos,
         zoom: defaultZoom,
-//        disableDefaultUI: true,
-//        mapTypeControl: true,
-//        streetViewControl: true,
+        disableDefaultUI: true,
+        streetViewControl: true,
+        zoomControl: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
@@ -88,5 +88,4 @@ export class MapTabJsPage {
   	  position: this.map.getCenter()
   	});
   }
-
 }

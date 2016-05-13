@@ -1,4 +1,4 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, Events} from 'ionic-angular';
 import {GlobalVars} from '../../global-vars';
 import {MapTabNativePage} from '../map-tab-native/map-tab-native';
 import {MapTabJsPage} from '../map-tab-js/map-tab-js';
@@ -10,19 +10,35 @@ import {SearchPage} from '../search/search';
 })
 export class TabsPage {
   static get parameters() {
-    return [[NavController], [GlobalVars]];
+    return [[NavController], [GlobalVars], [Events]];
   }
-  constructor(nav, glob) {
+  constructor(nav, glob, events) {
     this.nav = nav;
     this.glob = glob;
+    this.events = events;
     this.list_tab = ListTabPage;
-		if (window.plugin === undefined)
-			this.map_tab = MapTabJsPage;
-		else
+
+		if (this.nativePluginIsAvailable())
 			this.map_tab = MapTabNativePage;
+		else
+			this.map_tab = MapTabJsPage;
   }
+
+	nativePluginIsAvailable() {
+		if (window.plugin === undefined)
+			return false;
+		if (window.plugin.google === undefined)
+			return false;
+		if (window.plugin.google.maps === undefined)
+			return false;
+		return true
+	}
 
   goToSearch() {
     this.nav.push(SearchPage);
+  }
+
+  mapLock() {
+    this.events.publish('mapUnlock', false);
   }
 }

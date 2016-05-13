@@ -1,4 +1,5 @@
-import {Page, Geolocation} from 'ionic-angular';
+import {Page, Events} from 'ionic-angular';
+import {Geolocation} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
 
 const defaultZoom = 15;
@@ -9,12 +10,34 @@ const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 })
 export class MapTabNativePage {
   static get parameters() {
-    return [[GlobalVars]];
+    return [[GlobalVars], [Events]];
   }
-  constructor(glob) {
+  constructor(glob, events) {
     this.map = null;
     this.glob = glob;
     this.centerMarker = null;
+
+    events.subscribe('mapUnlock', (bool) => {
+      this.toggleMapLock(bool[0]);
+    });
+  }
+
+  toggleMapLock(bool) {
+    let count = 42;
+    let toggle = () => {
+      try {
+        if (this.glob.lastLock !== bool) {
+          this.map.setClickable(bool);
+          this.glob.lastLock = bool;
+        }
+      }
+      catch(e) {
+        console.error(e);
+        if (count-- && bool)
+          setTimeout(toggle, 42);
+      }
+    };
+    toggle();
   }
 
   onPageLoaded() {
@@ -35,26 +58,24 @@ export class MapTabNativePage {
       mapType: plugin.google.maps.MapTypeId.ROADMAP,
       camera: {
         latLng: startPos,
-        zoom: defaultZoom
+        zoom: defaultZoom,
       }
     };
 
     let div = document.getElementById("map");
     this.map = plugin.google.maps.Map.getMap(div, mapOptions);
+    this.map.on(plugin.google.maps.event.MAP_READY, () => {
+      this.toggleMapLock(true);
+    });
   }
 
   setCurrentPos() {
     let options = {timeout: 10000, enableHighAccuracy: true};
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.glob.coords = new plugin.google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    Geolocation.getCurrentPosition(options).then((pos) => {
+        this.glob.coords = new plugin.google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         this.updateCenter();
-      },
-      (error) => {
-        console.error(error);
-      }, options
-    );
+    });
   }
 
   setAddress() {
@@ -78,7 +99,8 @@ export class MapTabNativePage {
 
     this.map.animateCamera({
       target: this.glob.coords,
-      zoom: defaultZoom
+      zoom: defaultZoom,
+      duration: 500
     }, () => {
     	this.centerMarker = this.map.addMarker({
     	  animation: plugin.google.maps.Animation.DROP,
