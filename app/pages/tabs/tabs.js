@@ -3,7 +3,6 @@ import {GlobalVars} from '../../global-vars';
 import {MapTabNativePage} from '../map-tab-native/map-tab-native';
 import {MapTabJsPage} from '../map-tab-js/map-tab-js';
 import {ListTabPage} from '../list-tab/list-tab';
-import {SearchPage} from '../search/search';
 
 @Page({
   templateUrl: 'build/pages/tabs/tabs.html'
@@ -33,10 +32,6 @@ export class TabsPage {
 			return false;
 		return true
 	}
-
-  goToSearch() {
-    this.nav.push(SearchPage);
-  }
 
   mapLock() {
     this.events.publish('mapUnlock', false);

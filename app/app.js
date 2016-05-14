@@ -36,9 +36,25 @@ export class MyApp {
   openPage(page) {
     this.mapUnlock();
     let nav = this.app.getComponent('nav');
-    if (nav.getActive().componentType !== page.component) {
-      nav.setRoot(page.component);
-    }
+    let count = 42;
+    let menuSwitch = () => {
+      try {
+        console.log('isDiff?');
+        if (nav.getActive().componentType !== page.component) {
+          console.log('yes');
+          nav.setRoot(page.component);
+        }
+        else {
+          console.log('no');
+        }
+      }
+      catch(e) {
+        console.error(e);
+        if (count--)
+          setTimeout(menuSwitch, 42);
+      }
+    };
+    menuSwitch();
   }
 
   mapUnlock() {

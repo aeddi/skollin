@@ -1,6 +1,9 @@
-<ion-navbar *navbar>
-	<ion-input type="text" [(ngModel)]="searchQuery" autofocus clearInput></ion-input>
+<ion-navbar class="tabs" *navbar skollin>
+  <ion-title class="text-title">
+		Choisir un lieu
+  </ion-title>
 </ion-navbar>
 
-<ion-content padding class="search">
+<ion-content class="search">
+	<ion-searchbar focuser placeholder="Taper une adresse..."></ion-searchbar>
 </ion-content>

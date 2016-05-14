@@ -1,6 +1,7 @@
-import {Page, Events} from 'ionic-angular';
+import {Page, Events, NavController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
+import {SearchPage} from '../search/search';
 
 const defaultZoom = 15;
 const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
@@ -10,9 +11,10 @@ const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 })
 export class MapTabNativePage {
   static get parameters() {
-    return [[GlobalVars], [Events]];
+    return [[GlobalVars], [Events], [NavController]];
   }
-  constructor(glob, events) {
+  constructor(glob, events, nav) {
+    this.nav = nav;
     this.map = null;
     this.glob = glob;
     this.centerMarker = null;
@@ -41,6 +43,7 @@ export class MapTabNativePage {
   }
 
   onPageLoaded() {
+    
 		this.initMap();
 
     if (this.glob.address === null) {
@@ -107,5 +110,9 @@ export class MapTabNativePage {
     	  position: this.glob.coords
     	});
     });
+  }
+
+  goToSearch() {
+    this.nav.push(SearchPage);
   }
 }

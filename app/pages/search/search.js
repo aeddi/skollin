@@ -1,8 +1,10 @@
 import {Page} from 'ionic-angular';
 import {GlobalVars} from '../../global-vars';
+import {Focuser} from '../../directives/autofocus-searchbar'
 
 @Page({
   templateUrl: 'build/pages/search/search.html',
+  directives: [Focuser]
 })
 export class SearchPage {
   static get parameters() {
