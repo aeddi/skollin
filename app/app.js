@@ -1,5 +1,6 @@
 import {App, IonicApp, Platform, Events} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
+import {LoginPage} from './pages/login/login';
 import {TabsPage} from './pages/tabs/tabs';
 import {SelectedDealPage} from './pages/sel-deal/sel-deal';
 import {UserPage} from './pages/user/user';
@@ -19,16 +20,21 @@ export class MyApp {
   constructor(app, platform, events) {
     this.app = app;
     this.events = events;
+
+    this.userPage = {component: UserPage};
     this.pages = [
-      {title: 'Find a bar', component: TabsPage},
-      {title: 'My selection', component: SelectedDealPage},
-      {title: 'My account', component: UserPage},
+      {title: 'Trouver un lieu', component: TabsPage},
+      {title: 'Paiement', component: SelectedDealPage},
+      {title: 'Historique', component: SelectedDealPage},
+      {title: 'Notifications', component: SelectedDealPage},
+      {title: 'Paramètres', component: SelectedDealPage},
     ];
+    this.aboutPage = {component: UserPage};
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.rootPage = TabsPage;
+      this.rootPage = LoginPage;
       StatusBar.styleDefault();
     });
   }
@@ -39,14 +45,8 @@ export class MyApp {
     let count = 42;
     let menuSwitch = () => {
       try {
-        console.log('isDiff?');
-        if (nav.getActive().componentType !== page.component) {
-          console.log('yes');
+        if (nav.getActive().componentType !== page.component)
           nav.setRoot(page.component);
-        }
-        else {
-          console.log('no');
-        }
       }
       catch(e) {
         console.error(e);

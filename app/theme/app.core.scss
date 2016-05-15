@@ -13,3 +13,44 @@
 @import "../pages/sel-deal/sel-deal";
 @import "../pages/tabs/tabs";
 @import "../pages/user/user";
+@import "../pages/login/login";
+
+body {
+  font-family: "avenir book";
+}
+
+#side-menu {
+  background-color: #3d4d6e;
+  color: #e1d7d6;
+
+  img {
+    width: 30%;
+    margin: 20px;
+    display: inline;
+  }
+
+  p {
+    display: inline;
+    color: #e4afaf;
+    font-size: 20px;
+    position: relative;
+    bottom: 35px;
+  }
+
+  div.item-inner {
+    border-bottom: 0;
+  }
+
+  button {
+    background-color: #3d4d6e;
+    color: #e1d7d6;
+    border: 0;
+  }
+
+  #about {
+    font-weight: 100;
+    color: #a69c9b;
+    position: absolute;
+    bottom: 12px;
+  }
+}

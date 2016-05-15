@@ -7,4 +7,38 @@
   .gmnoprint a, .gmnoprint span, .gm-style-cc {
       display:none;
   }
+
+  #map-input {
+    color: #3d4d6e;
+    font-family: "avenir book";
+    font-size: 15px;
+    font-weight: 350;
+    width: 66%;
+    margin-top: 12px;
+    padding: 5px;
+    padding-left: 40px;
+    border-radius: 0;
+    box-shadow: unset;
+    border: 1px solid #3d4d6e;
+    background-color: #e1d7d6;
+    background-image: url(../../img/search.svg);
+    background-size: 18px;
+    background-position: 8px 6px;
+    background-repeat: no-repeat;
+    text-overflow: ellipsis;
+  }
+}
+
+.pac-container {
+  div.pac-item {
+    span {
+      font-family: "avenir book";
+      color: #3d4d6e;
+      font-size: 12px;
+    }
+
+    span.pac-item-query, span.pac-matched {
+      font-size: 14px;
+    }
+  }
 }

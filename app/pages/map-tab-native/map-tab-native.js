@@ -21,6 +21,9 @@ export class MapTabNativePage {
     events.subscribe('mapUnlock', (bool) => {
       this.toggleMapLock(bool[0]);
     });
+    events.subscribe('locateUser', () => {
+      this.setCurrentPos(true);
+    });
   }
 
   toggleMapLock(bool) {
@@ -46,8 +49,8 @@ export class MapTabNativePage {
 		this.initSearchBox();
 
     if (this.glob.address === null) {
-      this.glob.address = 'My position';
-      this.setCurrentPos();
+      this.glob.address = 'Ma position';
+      this.setCurrentPos(false);
     }
     else {
       this.setAddress();
@@ -72,18 +75,43 @@ export class MapTabNativePage {
   }
 
   initSearchBox() {
-    let div = document.getElementById('map-input').childNodes[0];
-    this.searchBox = new google.maps.places.SearchBox(div);
+    let inputDiv = document.getElementById('map-input');
+    this.searchBox = new google.maps.places.SearchBox(inputDiv);
 
-    div.addEventListener('focusin', () => {
+    let count = 420;
+    let removeLogo = () => {
+      let dropDownDiv = document.getElementsByClassName('pac-container')[0];
+      if (dropDownDiv === undefined && count--)
+        setTimeout(removeLogo, 24);
+      else
+        dropDownDiv.className = dropDownDiv.className.replace(/\bpac-logo\b/,'');
+    };
+    removeLogo();
+
+    this.map.on(plugin.google.maps.event.CAMERA_CHANGE, (pos) => {
+      this.map.getVisibleRegion((bounds) => {
+        this.searchBox.setBounds(bounds);
+      });
+    });
+
+    this.searchBox.addListener('places_changed', () => {
+      this.glob.address = inputDiv.value;
+      this.setAddress();
+    });
+
+    inputDiv.addEventListener('focusin', () => {
       this.toggleMapLock(false);
     });
-    div.addEventListener('focusout', () => {
+    inputDiv.addEventListener('focusout', () => {
       this.toggleMapLock(true);
     });
   }
 
-  setCurrentPos() {
+  setCurrentPos(changeInput) {
+    if (changeInput) {
+      let inputDiv = document.getElementById("map-input");
+      inputDiv.value = "Ma position"
+    }
     let options = {timeout: 10000, enableHighAccuracy: true};
 
     Geolocation.getCurrentPosition(options).then((pos) => {
@@ -93,7 +121,7 @@ export class MapTabNativePage {
   }
 
   setAddress() {
-    let geocoder = new plugin.google.maps.Geocoder();
+    let geocoder = plugin.google.maps.Geocoder;
     let coords = geocoder.geocode({'address': this.glob.address},
       (results, status) => {
         if (results.length) {
@@ -101,7 +129,7 @@ export class MapTabNativePage {
           this.updateCenter();
         }
         else {
-          this.glob.address = 'Unknown address';
+          this.glob.address = 'Adresse inconnue';
         }
       });
   }
@@ -116,10 +144,12 @@ export class MapTabNativePage {
       zoom: defaultZoom,
       duration: 500
     }, () => {
-    	this.centerMarker = this.map.addMarker({
+    	this.map.addMarker({
     	  animation: plugin.google.maps.Animation.DROP,
     	  position: this.glob.coords
-    	});
+    	}, (marker) => {
+        this.centerMarker = marker;
+      });
     });
   }
 

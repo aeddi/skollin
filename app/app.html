@@ -1,18 +1,23 @@
 <ion-menu [content]="content">
 
   <ion-toolbar skollin>
-    <ion-title>Pages</ion-title>
+    <ion-title>Menu</ion-title>
     <button menuToggle (click)="mapUnlock()">
       <ion-icon name='close'></ion-icon>
     </button>
   </ion-toolbar>
 
-  <ion-content>
+  <ion-content id="side-menu">
+    <div id="side-profil" (click)="openPage(userPage)" menuToggle>
+      <img src="img/avatar.png" (click)="openPage(p)" menuToggle>
+      <p (click)="openPage(p)" menuToggle>Éric Poletti</p>
+    </div>
     <ion-list>
-      <button menuToggle ion-item *ngFor="#p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="#p of pages" (click)="openPage(p)" menuToggle>
         {{p.title}}
       </button>
     </ion-list>
+    <button id="about" ion-item (click)="openPage(userPage)" menuToggle>A propos</button>
   </ion-content>
 
 </ion-menu>

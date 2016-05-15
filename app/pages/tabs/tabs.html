@@ -6,9 +6,14 @@
     <img src="img/logo.png">
     kollin'
   </ion-title>
+  <ion-buttons end>
+    <button (click)="locateUser()">
+      <ion-icon name='locate'></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
-<ion-tabs id="tabs" tabbarPlacement="bottom" tabbarLayout="icon-left" skollin>
-  <ion-tab [root]="map_tab" tabIcon="map" tabTitle="Map"></ion-tab>
-  <ion-tab [root]="list_tab" tabIcon="list" tabTitle="List"></ion-tab>
+<ion-tabs id="tabs" tabbarPlacement="bottom" tabbarLayout="icon-left" skollin-rev>
+  <ion-tab [root]="map_tab" tabIcon="map" tabTitle="Carte"></ion-tab>
+  <ion-tab [root]="list_tab" tabIcon="list" tabTitle="Liste"></ion-tab>
 </ion-tabs>

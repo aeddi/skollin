@@ -1,0 +1,54 @@
+.login {
+  font-family: "avenir book";
+  background-color: #3d4d6e;
+  color: #e1d7d6;
+
+  .spacer {
+    width: 100%;
+  }
+
+  ion-item.item, ion-label, ion-input {
+    font-family: "avenir book";
+    background-color: #3d4d6e;
+    color: #e1d7d6;
+    font-size: 16px;
+    font-weight: 100;
+    padding: 0;
+  }
+
+  ion-input {
+    font-weight: 300;
+  }
+
+  p {
+    font-size: 14px;
+    margin-top: 5%;
+    font-weight: 100;
+    color: #a69c9b;
+  }
+
+  .button-cust {
+    text-align: center;
+    border-radius: 21px;
+    border: 1px solid #e1d7d6;
+    font-size: 13px;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    font-weight: 300;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  div.container {
+    width: 100%;
+    text-align: center;
+
+    ion-button {
+      font-weight: 300;
+      font-size: 20px;
+      border-bottom: 1px solid #e1d7d6;
+    }
+  }
+}

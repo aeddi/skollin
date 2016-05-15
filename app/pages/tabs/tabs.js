@@ -45,6 +45,10 @@ export class TabsPage {
 		return true
 	}
 
+  locateUser() {
+    this.events.publish('locateUser');
+  }
+
   mapLock() {
     this.events.publish('mapUnlock', false);
   }
