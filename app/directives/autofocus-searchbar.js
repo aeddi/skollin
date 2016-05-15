@@ -15,9 +15,13 @@ export class Focuser {
   ngOnInit() {
     //search bar is wrapped with a div so we get the child input
     const searchInput = this.elementRef.nativeElement.querySelector('input');
-    setTimeout(() => {
+    var count = 42;
+    var focus = () => {
       //delay required or ionic styling gets finicky
       this.renderer.invokeElementMethod(searchInput, 'focus', []);
-    }, 600);
+      if (count--)
+        setTimeout(focus, 24);
+    };
+    focus();
   }
 }

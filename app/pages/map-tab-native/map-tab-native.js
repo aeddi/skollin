@@ -1,7 +1,6 @@
 import {Page, Events, NavController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
-import {SearchPage} from '../search/search';
 
 const defaultZoom = 15;
 const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
@@ -43,8 +42,8 @@ export class MapTabNativePage {
   }
 
   onPageLoaded() {
-    
 		this.initMap();
+		this.initSearchBox();
 
     if (this.glob.address === null) {
       this.glob.address = 'My position';
@@ -68,6 +67,18 @@ export class MapTabNativePage {
     let div = document.getElementById("map");
     this.map = plugin.google.maps.Map.getMap(div, mapOptions);
     this.map.on(plugin.google.maps.event.MAP_READY, () => {
+      this.toggleMapLock(true);
+    });
+  }
+
+  initSearchBox() {
+    let div = document.getElementById('map-input').childNodes[0];
+    this.searchBox = new google.maps.places.SearchBox(div);
+
+    div.addEventListener('focusin', () => {
+      this.toggleMapLock(false);
+    });
+    div.addEventListener('focusout', () => {
       this.toggleMapLock(true);
     });
   }

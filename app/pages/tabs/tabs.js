@@ -1,4 +1,5 @@
 import {Page, NavController, Events} from 'ionic-angular';
+import {Keyboard} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
 import {MapTabNativePage} from '../map-tab-native/map-tab-native';
 import {MapTabJsPage} from '../map-tab-js/map-tab-js';
@@ -21,6 +22,17 @@ export class TabsPage {
 			this.map_tab = MapTabNativePage;
 		else
 			this.map_tab = MapTabJsPage;
+  }
+
+  onPageLoaded() {
+    let tabs = document.getElementsByTagName('ion-tabbar-section')[0];
+
+    window.addEventListener('native.keyboardshow', () => {
+      tabs.style.display = 'none';
+    });
+    window.addEventListener('native.keyboardhide', () => {
+      tabs.style.display = 'block';
+    });
   }
 
 	nativePluginIsAvailable() {

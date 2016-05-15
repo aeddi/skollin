@@ -1,4 +1,4 @@
-import {Page, Geolocation} from 'ionic-angular';
+import {Page, Geolocation, NavController} from 'ionic-angular';
 import {GlobalVars} from '../../global-vars';
 
 const defaultZoom = 15;
@@ -10,15 +10,17 @@ const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 
 export class MapTabJsPage {
   static get parameters() {
-    return [[GlobalVars]];
+    return [[GlobalVars], [NavController]];
   }
-  constructor(glob) {
+  constructor(glob, nav) {
+    this.nav = nav;
     this.glob = glob;
     this.centerMarker = null;
   }
 
   onPageLoaded() {
 		this.initMap();
+		this.initSearchBox();
 
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
       window.dispatchEvent(new Event('resize'))
@@ -43,7 +45,16 @@ export class MapTabJsPage {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
-    this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    let mapDiv = document.getElementById("map");
+    this.map = new google.maps.Map(map, mapOptions);
+
+//    let inputDiv = document.getElementById("map-input");
+//    this.map.controls[google.maps.ControlPosition.TOP].push(inputDiv);
+  }
+
+  initSearchBox() {
+    let div = document.getElementById('map-input').childNodes[0];
+    this.searchBox = new google.maps.places.SearchBox(div);
   }
 
   setCurrentPos() {
@@ -87,5 +98,9 @@ export class MapTabJsPage {
   	  animation: google.maps.Animation.DROP,
   	  position: this.map.getCenter()
   	});
+  }
+
+  goToSearch() {
+    this.nav.push(SearchPage);
   }
 }

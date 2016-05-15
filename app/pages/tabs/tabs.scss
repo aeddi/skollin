@@ -1,16 +1,36 @@
-ion-title {
-  font-family: avenir-book;
-}
+.navbar {
+  ion-title {
+    font-family: 'avenir book';
 
-ion-title img {
-  position: relative;
-  top: 3px;
-  left: 3px;
-  height: 42px;
+    .toolbar-title {
+      font-weight: 300;
+    }
+  }
+
+  ion-title img {
+    position: relative;
+    top: 3px;
+    left: 3px;
+    height: 42px;
+  }
 }
 
 .platform-ios {
-  ion-title img {
-    height: 32px;
+  .navbar {
+    ion-title img {
+      height: 32px;
+    }
+  }
+}
+
+.platform-android {
+  .navbar {
+    ion-title {
+      position: absolute;
+      width: 100%;
+      left: 0px;
+      top: 0px;
+      text-align: center;
+    }
   }
 }
