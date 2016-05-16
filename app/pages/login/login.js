@@ -1,4 +1,5 @@
 import {Page, NavController, Loading} from 'ionic-angular';
+import {SignupPage} from '../signup/signup';
 import {TabsPage} from '../tabs/tabs';
 
 @Page({
@@ -36,5 +37,9 @@ export class LoginPage {
       this.nav.present(loading);
       this.nav.setRoot(TabsPage, {loading: loading}, {animate: true});
     }
+  }
+
+  goToSignUp() {
+    this.nav.push(SignupPage);
   }
 }

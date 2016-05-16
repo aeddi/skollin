@@ -1,4 +1,4 @@
-import {Page, Events, NavController} from 'ionic-angular';
+import {Page, Events, NavController, NavParams} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
 
@@ -10,13 +10,14 @@ const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 })
 export class MapTabNativePage {
   static get parameters() {
-    return [[GlobalVars], [Events], [NavController]];
+    return [[GlobalVars], [Events], [NavController], [NavParams]];
   }
-  constructor(glob, events, nav) {
+  constructor(glob, events, nav, navParams) {
     this.nav = nav;
     this.map = null;
     this.glob = glob;
     this.centerMarker = null;
+    this.loading = navParams.data;
 
     events.subscribe('mapUnlock', (bool) => {
       this.toggleMapLock(bool[0]);
@@ -54,6 +55,7 @@ export class MapTabNativePage {
     }
     else {
       this.setAddress();
+      document.getElementById('map-input').value = this.glob.address;
     }
   }
 
@@ -71,6 +73,11 @@ export class MapTabNativePage {
     this.map = plugin.google.maps.Map.getMap(div, mapOptions);
     this.map.on(plugin.google.maps.event.MAP_READY, () => {
       this.toggleMapLock(true);
+      if (this.loading !== undefined) {
+        setTimeout(() => {
+          this.loading.dismiss()
+        }, 1000);
+      }
     });
   }
 

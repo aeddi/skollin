@@ -1,0 +1,31 @@
+.signup, .signup p {
+  font-family: "avenir book";
+  background-color: #3d4d6e;
+  color: #e1d7d6;
+
+  .spacer {
+    width: 100%;
+  }
+  
+  .button-cust {
+    text-align: center;
+    border-radius: 21px;
+    border: 1px solid #e1d7d6;
+    font-size: 13px;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    font-weight: 300;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
+
+.signup p {
+  font-size: 15px;
+}
+
+h1 {
+  text-align: center;
+}

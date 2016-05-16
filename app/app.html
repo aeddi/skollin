@@ -9,15 +9,15 @@
 
   <ion-content id="side-menu">
     <div id="side-profil" (click)="openPage(userPage)" menuToggle>
-      <img src="img/avatar.png" (click)="openPage(p)" menuToggle>
-      <p (click)="openPage(p)" menuToggle>Éric Poletti</p>
+      <img src="img/avatar.png" (click)="openPage(userPage)" menuToggle>
+      <p (click)="openPage(userPage)" menuToggle>Éric Poletti</p>
     </div>
     <ion-list>
       <button ion-item *ngFor="#p of pages" (click)="openPage(p)" menuToggle>
         {{p.title}}
       </button>
     </ion-list>
-    <button id="about" ion-item (click)="openPage(userPage)" menuToggle>A propos</button>
+    <button id="about" ion-item (click)="openPage(aboutPage)" menuToggle>A propos</button>
   </ion-content>
 
 </ion-menu>

@@ -1,0 +1,43 @@
+<ion-navbar class="navbar" *navbar skollin>
+  <ion-title>
+    <img src="img/logo.png">
+    kollin'
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="signup">
+  <h1 style="margin-top:12px">Work In Progress</h1>
+
+  <div class="spacer" style="height:2%"></div>
+
+  <ion-row>
+    <ion-col width-50 offset-25>
+      <img src="img/logo-wip.png">
+    </ion-col>
+  </ion-row>
+
+  <div class="spacer" style="height:1%"></div>
+
+  <ion-row>
+    <ion-col width-80 offset-10>
+      <p>Pour cette version de démonstration, merci d'utiliser les identifiants suivants:</p>
+
+      <div class="spacer" style="height:4%"></div>
+
+      <ion-item>
+        <ion-label fixed>Identifiant</ion-label>
+        <ion-input type="text" value="test"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Mot de passe</ion-label>
+        <ion-input type="text" value="test"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <div class="spacer" style="height:5%"></div>
+
+  <div class="button-cust" (click)="goBack()">OK</div>
+
+</ion-content>

@@ -23,19 +23,19 @@
         <ion-input type="password" [(ngModel)]='pass'></ion-input>
       </ion-item>
 
-      <div><p>Mot de passe oublié ?</p></div>
+      <div (click)="goToSignUp()"><p>Mot de passe oublié ?</p></div>
 
     </ion-col>
   </ion-row>
 
   <div class="spacer" style="height:1%"></div>
 
-  <div class="button-cust" (click)=goToHome()>OK</div>
+  <div class="button-cust" (click)="goToHome()">OK</div>
 
   <div class="spacer" style="height:5%"></div>
 
   <div class="container">
-    <ion-button>Créer un compte</ion-button>
+    <ion-button (click)="goToSignUp()">Créer un compte</ion-button>
   </div>
 
 </ion-content>

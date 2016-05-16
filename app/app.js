@@ -1,10 +1,14 @@
 import {App, IonicApp, Platform, Events, Loading} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
+import {GlobalVars} from './global-vars';
 import {LoginPage} from './pages/login/login';
 import {TabsPage} from './pages/tabs/tabs';
-import {SelectedDealPage} from './pages/sel-deal/sel-deal';
 import {UserPage} from './pages/user/user';
-import {GlobalVars} from './global-vars';
+import {PaymentPage} from './pages/payment/payment';
+import {HistoryPage} from './pages/history/history';
+import {NotificationsPage} from './pages/notifications/notifications';
+import {SettingsPage} from './pages/settings/settings';
+import {AboutPage} from './pages/about/about';
 
 @App({
   templateUrl: 'build/app.html',
@@ -26,12 +30,12 @@ export class MyApp {
     this.userPage = {component: UserPage};
     this.pages = [
       {title: 'Trouver un lieu', component: TabsPage},
-      {title: 'Paiement', component: SelectedDealPage},
-      {title: 'Historique', component: SelectedDealPage},
-      {title: 'Notifications', component: SelectedDealPage},
-      {title: 'Paramètres', component: SelectedDealPage},
+      {title: 'Paiement', component: PaymentPage},
+      {title: 'Historique', component: HistoryPage},
+      {title: 'Notifications', component: NotificationsPage},
+      {title: 'Paramètres', component: SettingsPage},
     ];
-    this.aboutPage = {component: UserPage};
+    this.aboutPage = {component: AboutPage};
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
