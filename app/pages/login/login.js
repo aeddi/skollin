@@ -1,4 +1,4 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, Loading} from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
 
 @Page({
@@ -29,7 +29,12 @@ export class LoginPage {
       else
         labPass.style.color = '#e1d7d6';
     }
-    else
-      this.nav.setRoot(TabsPage, {}, {animate: true});
+    else {
+      let loading = Loading.create({
+        content: "Chargement...",
+      });
+      this.nav.present(loading);
+      this.nav.setRoot(TabsPage, {loading: loading}, {animate: true});
+    }
   }
 }

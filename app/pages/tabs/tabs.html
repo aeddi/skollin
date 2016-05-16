@@ -14,6 +14,6 @@
 </ion-navbar>
 
 <ion-tabs id="tabs" tabbarPlacement="bottom" tabbarLayout="icon-left" skollin-rev>
-  <ion-tab [root]="map_tab" tabIcon="map" tabTitle="Carte"></ion-tab>
+  <ion-tab [root]="map_tab" [rootParams]="loading" tabIcon="map" tabTitle="Carte"></ion-tab>
   <ion-tab [root]="list_tab" tabIcon="list" tabTitle="Liste"></ion-tab>
 </ion-tabs>

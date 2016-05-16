@@ -152,8 +152,4 @@ export class MapTabNativePage {
       });
     });
   }
-
-  goToSearch() {
-    this.nav.push(SearchPage);
-  }
 }

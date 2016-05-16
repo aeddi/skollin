@@ -1,4 +1,4 @@
-import {Page, NavController, Events} from 'ionic-angular';
+import {Page, NavController, NavParams, Events} from 'ionic-angular';
 import {Keyboard} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
 import {MapTabNativePage} from '../map-tab-native/map-tab-native';
@@ -10,13 +10,14 @@ import {ListTabPage} from '../list-tab/list-tab';
 })
 export class TabsPage {
   static get parameters() {
-    return [[NavController], [GlobalVars], [Events]];
+    return [[NavController], [NavParams], [GlobalVars], [Events]];
   }
-  constructor(nav, glob, events) {
+  constructor(nav, navParams, glob, events) {
     this.nav = nav;
     this.glob = glob;
     this.events = events;
     this.list_tab = ListTabPage;
+    this.loading = navParams.get('loading');
 
 		if (this.nativePluginIsAvailable())
 			this.map_tab = MapTabNativePage;

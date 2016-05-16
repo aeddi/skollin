@@ -1,4 +1,4 @@
-import {Page, Geolocation, Events, NavController} from 'ionic-angular';
+import {Page, Geolocation, Events, NavController, NavParams} from 'ionic-angular';
 import {GlobalVars} from '../../global-vars';
 
 const defaultZoom = 15;
@@ -9,12 +9,13 @@ const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 })
 export class MapTabJsPage {
   static get parameters() {
-    return [[GlobalVars], [Events], [NavController]];
+    return [[GlobalVars], [Events], [NavController], [NavParams]];
   }
-  constructor(glob, events, nav) {
+  constructor(glob, events, nav, navParams) {
     this.nav = nav;
     this.glob = glob;
     this.centerMarker = null;
+    this.loading = navParams.data;
 
     events.subscribe('locateUser', () => {
       this.setCurrentPos(true);
@@ -34,6 +35,12 @@ export class MapTabJsPage {
       else {
         this.setAddress();
         document.getElementById('map-input').value = this.glob.address;
+      }
+
+      if (this.loading !== undefined) {
+        setTimeout(() => {
+          this.loading.dismiss()
+        }, 1000);
       }
     });
   }
@@ -125,9 +132,5 @@ export class MapTabJsPage {
   	  animation: google.maps.Animation.DROP,
   	  position: this.map.getCenter()
   	});
-  }
-
-  goToSearch() {
-    this.nav.push(SearchPage);
   }
 }
