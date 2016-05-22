@@ -1,20 +1,23 @@
 import {Page, NavController} from 'ionic-angular';
+import {HourFormat} from '../../pipes/hourFormat';
+import {GlobalVars} from '../../global-vars';
+import {DetailsPage} from '../details/details';
 
-/*
-  Generated class for the ListTabPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
   templateUrl: 'build/pages/list-tab/list-tab.html',
+  pipes: [HourFormat]
 })
 export class ListTabPage {
   static get parameters() {
-    return [[NavController]];
+    return [[GlobalVars], [NavController]];
   }
 
-  constructor(nav) {
+  constructor(glob, nav) {
     this.nav = nav;
+    this.glob = glob;
+  }
+
+  displayCard(index) {
+    this.nav.push(DetailsPage, {index: index});
   }
 }

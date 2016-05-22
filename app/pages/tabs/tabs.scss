@@ -23,15 +23,13 @@
   }
 }
 
-.platform-android {
-  .navbar {
-    ion-title {
-      position: absolute;
-      width: 100%;
-      left: 0px;
-      top: 0px;
-      text-align: center;
-    }
+.navbar {
+  ion-title {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    text-align: center;
   }
 }
 

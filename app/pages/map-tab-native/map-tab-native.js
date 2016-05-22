@@ -2,7 +2,7 @@ import {Page, Events, NavController, NavParams} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {GlobalVars} from '../../global-vars';
 
-const defaultZoom = 15;
+const defaultZoom = 16;
 const defaultPos = {lat: 48.896685, lng: 2.318357};  // 42
 
 @Page({
@@ -14,7 +14,6 @@ export class MapTabNativePage {
   }
   constructor(glob, events, nav, navParams) {
     this.nav = nav;
-    this.map = null;
     this.glob = glob;
     this.centerMarker = null;
     this.loading = navParams.data;
@@ -23,7 +22,7 @@ export class MapTabNativePage {
       this.toggleMapLock(bool[0]);
     });
     events.subscribe('locateUser', () => {
-      this.setCurrentPos(true);
+      this.setCurrentPos();
     });
   }
 
@@ -49,13 +48,12 @@ export class MapTabNativePage {
 		this.initMap();
 		this.initSearchBox();
 
-    if (this.glob.address === null) {
-      this.glob.address = 'Ma position';
-      this.setCurrentPos(false);
+    if (this.glob.coords === null) {
+      this.setCurrentPos();
     }
     else {
-      this.setAddress();
       document.getElementById('map-input').value = this.glob.address;
+      this.updateCenter();
     }
   }
 
@@ -83,62 +81,60 @@ export class MapTabNativePage {
 
   initSearchBox() {
     let inputDiv = document.getElementById('map-input');
-    this.searchBox = new google.maps.places.SearchBox(inputDiv);
-
-    let count = 420;
-    let removeLogo = () => {
-      let dropDownDiv = document.getElementsByClassName('pac-container')[0];
-      if (dropDownDiv === undefined && count--)
-        setTimeout(removeLogo, 24);
-      else
-        dropDownDiv.className = dropDownDiv.className.replace(/\bpac-logo\b/,'');
+    let options = {
+      types: ['geocode']
     };
-    removeLogo();
+    this.searchBox = new google.maps.places.Autocomplete(inputDiv, options);
 
     this.map.on(plugin.google.maps.event.CAMERA_CHANGE, (pos) => {
       this.map.getVisibleRegion((bounds) => {
-        this.searchBox.setBounds(bounds);
+        let jsBounds = new google.maps.LatLngBounds(bounds.southwest, bounds.northeast);
+        this.searchBox.setBounds(jsBounds);
       });
     });
 
-    this.searchBox.addListener('places_changed', () => {
+    this.searchBox.addListener('place_changed', () => {
       this.glob.address = inputDiv.value;
-      this.setAddress();
+      let place = this.searchBox.getPlace();
+      if (!place.geometry)
+        return;
+      else {
+        let jsCoords = place.geometry.location;
+        this.glob.coords = new plugin.google.maps.LatLng(jsCoords.lat(), jsCoords.lng());
+        this.updateCenter();
+      }
     });
 
-    inputDiv.addEventListener('focusin', () => {
+    inputDiv.addEventListener('focus', () => {
       this.toggleMapLock(false);
+      inputDiv.value = '';
+
+      let count = 840;
+      let removeLogo = () => {
+        let dropDownDiv = document.getElementsByClassName('pac-container')[0];
+        if (dropDownDiv === undefined && count--)
+          setTimeout(removeLogo, 42);
+        else
+          dropDownDiv.className = dropDownDiv.className.replace(/\bpac-logo\b/,'');
+      };
+      removeLogo();
     });
-    inputDiv.addEventListener('focusout', () => {
+    inputDiv.addEventListener('blur', () => {
       this.toggleMapLock(true);
+      setTimeout(() => {
+        inputDiv.value = this.glob.address;
+      }, 142);
     });
   }
 
-  setCurrentPos(changeInput) {
-    if (changeInput) {
-      let inputDiv = document.getElementById("map-input");
-      inputDiv.value = "Ma position"
-    }
+  setCurrentPos() {
+    document.getElementById("map-input").value = this.glob.address = "Ma position"
     let options = {timeout: 10000, enableHighAccuracy: true};
 
     Geolocation.getCurrentPosition(options).then((pos) => {
         this.glob.coords = new plugin.google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         this.updateCenter();
     });
-  }
-
-  setAddress() {
-    let geocoder = plugin.google.maps.Geocoder;
-    let coords = geocoder.geocode({'address': this.glob.address},
-      (results, status) => {
-        if (results.length) {
-          this.glob.coords = results[0].position;
-          this.updateCenter();
-        }
-        else {
-          this.glob.address = 'Adresse inconnue';
-        }
-      });
   }
 
   updateCenter() {

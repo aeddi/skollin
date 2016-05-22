@@ -1,3 +1,33 @@
 .list-tab {
+  ion-list, ion-item {
+    color: #3d4d6e;
+    background-color: #e1d7d6;
+    font-family: 'avenir book';
+  }
 
+  border-top: 1px solid #3d4d6e;
+
+  img {
+    height: 52px;
+  }
+
+  .thumb {
+    text-align: center;
+  }
+
+  .infos {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .item-inner, ion-list > .item:last-child {
+    border: 0;
+  }
+
+  background-color: #2b3751;
+
+  .address {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

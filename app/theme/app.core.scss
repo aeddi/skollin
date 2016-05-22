@@ -19,6 +19,18 @@
 @import "../pages/payment/payment";
 @import "../pages/settings/settings";
 @import "../pages/signup/signup";
+@import "../pages/details/details";
+
+@font-face {
+  font-family: 'avenir book';
+  src: url('../fonts/avenir-book.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/avenir-book.ttf')  format('truetype') /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'avenir black';
+  src: url('../fonts/avenir-black.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/avenir-black.ttf')  format('truetype') /* Safari, Android, iOS */
+}
 
 body {
   font-family: "avenir book";
